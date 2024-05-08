@@ -120,6 +120,7 @@ macro_rules! languages_table {
             fn try_from(s: &str) -> Result<Self, Self::Error> {
                 match s {
                     $($code => Ok(Self::$variant),)+
+                    $($code_b => Ok(Self::$variant),)+
                     _ => Err(ParseError {
                         language: s.to_owned(),
                     }),
@@ -520,7 +521,7 @@ static_array_iterators! {
 }
 
 /// An error parsing a language from its two letter language code.
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, PartialEq)]
 pub struct ParseError {
     /// The language that could not be parsed.
     pub language: String,
@@ -572,10 +573,15 @@ mod tests {
         assert_eq!("ae".parse::<LanguageCode>().unwrap(), LanguageCode::Ae);
         assert_eq!("zh".parse::<LanguageCode>().unwrap(), LanguageCode::Zh);
         assert_eq!("sg".parse::<LanguageCode>().unwrap(), LanguageCode::Sg);
+        
+        assert_eq!("en".parse::<LanguageCode>(), Ok(LanguageCode::En));
+        assert_eq!("eng".parse::<LanguageCode>(), Ok(LanguageCode::En));
+        assert_eq!("ger".parse::<LanguageCode>(), Ok(LanguageCode::De));
+        assert_eq!("de".parse::<LanguageCode>(), Ok(LanguageCode::De));
 
         assert!("aE".parse::<LanguageCode>().is_err());
         assert!("Zh".parse::<LanguageCode>().is_err());
-        assert!("sag".parse::<LanguageCode>().is_err());
+        assert!("sag".parse::<LanguageCode>().is_ok());
     }
 
     #[test]

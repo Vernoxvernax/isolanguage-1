@@ -4,11 +4,11 @@ description = "ISO 639-1 library with optional Serde support"
 keywords = ["ISO", "639-1", "languages"]
 categories = ["data-structures", "internationalization"]
 license = "MIT OR Apache-2.0"
-version = "0.2.2"
+version = "0.2.3"
 readme = "README.md"
 repository = "https://github.com/Kestrer/isolanguage-1"
-authors = ["Kestrer <kestrer.dev@gmail.com>"]
+authors = ["Kestrer <kestrer.dev@gmail.com>", "DepriSheep"]
 edition = "2021"
 
 [dependencies]
-serde = { version = "1.0.120", features = ["derive"], optional = true }
+serde = { version = "1.0.200", features = ["derive"], optional = true }
