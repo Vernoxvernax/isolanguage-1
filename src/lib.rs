@@ -119,8 +119,11 @@ macro_rules! languages_table {
             /// Tries to convert from a two letter language code.
             fn try_from(s: &str) -> Result<Self, Self::Error> {
                 match s {
-                    $($code => Ok(Self::$variant),)+
-                    $($code_b => Ok(Self::$variant),)+
+                    $(i 
+                        if i == $code
+                        || i == $code_b
+                        || i == $code_t
+                        => Ok(Self::$variant),)+
                     _ => Err(ParseError {
                         language: s.to_owned(),
                     }),
@@ -574,10 +577,11 @@ mod tests {
         assert_eq!("zh".parse::<LanguageCode>().unwrap(), LanguageCode::Zh);
         assert_eq!("sg".parse::<LanguageCode>().unwrap(), LanguageCode::Sg);
         
-        assert_eq!("en".parse::<LanguageCode>(), Ok(LanguageCode::En));
-        assert_eq!("eng".parse::<LanguageCode>(), Ok(LanguageCode::En));
-        assert_eq!("ger".parse::<LanguageCode>(), Ok(LanguageCode::De));
-        assert_eq!("de".parse::<LanguageCode>(), Ok(LanguageCode::De));
+        assert_eq!("en".parse::<LanguageCode>().unwrap(), LanguageCode::En);
+        assert_eq!("eng".parse::<LanguageCode>().unwrap(), LanguageCode::En);
+        assert_eq!("ger".parse::<LanguageCode>().unwrap(), LanguageCode::De);
+        assert_eq!("de".parse::<LanguageCode>().unwrap(), LanguageCode::De);
+        assert_eq!("deu".parse::<LanguageCode>().unwrap(), LanguageCode::De);
 
         assert!("aE".parse::<LanguageCode>().is_err());
         assert!("Zh".parse::<LanguageCode>().is_err());

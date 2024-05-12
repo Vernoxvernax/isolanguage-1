@@ -9,7 +9,7 @@ This crate implements the [ISO 639-1](https://en.wikipedia.org/wiki/ISO_639-1) s
 It also has optional Serde support, by using the `serde` feature:
 
 ```toml
-isolanguage-1 = { version = "0.2.3", features = ["serde"] }
+isolanguage-1 = { version = "0.2.3", git = "https://github.com/Vernoxvernax/isolanguage-1" , features = ["serde"] }
 ```
 
 The main type is the `LanguageCode` type, which is an enum for every single language in ISO
